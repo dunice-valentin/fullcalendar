@@ -388,6 +388,11 @@ function Calendar(element, options, eventSources) {
 			clearEvents();
 		}
 
+        if ($('#calendar').attr('data-date')) {
+          date = new Date($('#calendar').attr('data-date'));
+          $('#calendar').removeAttr('data-date');
+        }
+
 		freezeContentHeight();
 		currentView.render(date, inc || 0); // the view's render method ONLY renders the skeleton, nothing else
 		setSize();
@@ -2729,6 +2734,10 @@ function AgendaDayView(element, calendar) {
 	
 	
 	function render(date, delta) {
+
+        if ($('#calendar').attr('data-date')) {
+          date = new Date($('#calendar').attr('data-date'));
+        }
 
 		if (delta) {
 			addDays(date, delta);
@@ -5241,6 +5250,13 @@ function DayEventRenderer() {
 		// Set the top coordinate on each element (requires segment.outerHeight)
 		setVerticals(segments, doRowHeights);
 
+        var current_selector = $('.sel-mode');
+        if (current_selector.val() == 'month') {
+          $('.fc-event-hori').on('click', function () {
+            $('#calendar').attr('data-date', $(this).attr('data-date'))
+            current_selector.val('agendaDay').trigger('change');
+          });
+        }
 		return segments;
 	}
 
@@ -5341,6 +5357,11 @@ function DayEventRenderer() {
 		}else{
 			html += "<div";
 		}
+
+        var current_day = ("0" + segment.event.start.getDate()).slice(-2),
+          current_month = ("0" + (segment.event.start.getMonth() + 1)).slice(-2),
+          current_year = segment.event.start.getFullYear();
+
 		html +=
 			" class='" + classNames.join(' ') + "'" +
 			" style=" +
@@ -5349,16 +5370,16 @@ function DayEventRenderer() {
 				"left:" + segment.left + "px;" +
 				skinCss +
 				"'" +
-			">" +
+			" data-date='" + current_year + '-' + current_month + '-' + current_day + "'>" +
 			"<div class='fc-event-inner'>";
-		if (!event.allDay && segment.isStart) {
+//		if (!event.allDay && segment.isStart) {
 			html +=
 				"<span class='fc-event-time'>" +
 				htmlEscape(
 					formatDates(event.start, event.end, opt('timeFormat'))
 				) +
 				"</span>";
-		}
+//		}
 		html +=
 			"<span class='fc-event-title'>" +
 			htmlEscape(event.title || '') +
