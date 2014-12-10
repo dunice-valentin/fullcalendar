@@ -1839,12 +1839,16 @@ function smartProperty(obj, name) { // get a camel-cased/namespaced property of 
 
 
 function htmlEscape(s) {
-	return s.replace(/&/g, '&amp;')
-		.replace(/</g, '&lt;')
-		.replace(/>/g, '&gt;')
-		.replace(/'/g, '&#039;')
-		.replace(/"/g, '&quot;')
-		.replace(/\n/g, '<br />');
+  s = s.replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/'/g, ''')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br />');
+  if (s.length < 10 && s.length > 5) {
+    s = s.replace(/\s/g, '<br />');
+  }
+  return s;
 }
 
 
@@ -3140,6 +3144,7 @@ function AgendaView(element, calendar, viewName) {
 			classNames = [
 				'fc-col' + col,
 				'fc-' + dayIDs[date.getDay()],
+				'fc-state-highlight',
 				contentClass
 			];
 			if (+date == +today) {
