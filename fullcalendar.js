@@ -1842,7 +1842,7 @@ function htmlEscape(s) {
   s = s.replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/'/g, ''')
+    .replace(/'/g, '&quot;')
     .replace(/"/g, '&quot;')
     .replace(/\n/g, '<br />');
   if (s.length < 10 && s.length > 5) {
