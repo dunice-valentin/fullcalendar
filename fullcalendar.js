@@ -5255,13 +5255,18 @@ function DayEventRenderer() {
 		// Set the top coordinate on each element (requires segment.outerHeight)
 		setVerticals(segments, doRowHeights);
 
-        var current_selector = $('.sel-mode');
+    var selector_interval = setInterval(function () {
+      var current_selector = $('.sel-mode');
+      if (current_selector.length > 0) {
         if (current_selector.val() == 'month') {
           $('.fc-event-hori').on('click', function () {
-            $('#calendar').attr('data-date', $(this).attr('data-date'))
+            $('#calendar').attr('data-date', $(this).attr('data-date'));
             current_selector.val('agendaDay').trigger('change');
           });
         }
+        clearInterval(selector_interval);
+      }
+    }, 1);
 		return segments;
 	}
 
