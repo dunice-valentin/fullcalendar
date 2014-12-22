@@ -1839,16 +1839,16 @@ function smartProperty(obj, name) { // get a camel-cased/namespaced property of 
 
 
 function htmlEscape(s) {
-  s = s.replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/'/g, '&quot;')
-    .replace(/"/g, '&quot;')
-    .replace(/\n/g, '<br />');
-  if (s.length < 10 && s.length > 5) {
-    s = s.replace(/\s/g, '<br />');
-  }
-  return s;
+	s = s.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/'/g, '&#039;')
+		.replace(/"/g, '&quot;')
+		.replace(/\n/g, '<br />');
+	if (s.length < 10 && s.length > 5) {
+		s = s.replace(/\s/g, '<br />');
+	}
+	return s;
 }
 
 
@@ -3144,7 +3144,6 @@ function AgendaView(element, calendar, viewName) {
 			classNames = [
 				'fc-col' + col,
 				'fc-' + dayIDs[date.getDay()],
-				'fc-state-highlight',
 				contentClass
 			];
 			if (+date == +today) {
@@ -3965,11 +3964,18 @@ function AgendaEventRenderer() {
 				trigger('eventAfterRender', event, event, eventElement);
 			}
 		}
-					
+
 	}
 	
 	
 	function slotSegHtml(event, seg) {
+    var parse_date = function (d) {
+      if (event.start.getMinutes() == 0) {
+        return moment(d.start).format('ha')
+      } else {
+        return moment(d.start).format('h:mma')
+      }
+    }
 		var html = "<";
 		var url = event.url;
 		var skinCss = getSkinCss(event, opt);
@@ -4004,7 +4010,7 @@ function AgendaEventRenderer() {
 			">" +
 			"<div class='fc-event-inner'>" +
 			"<div class='fc-event-time'>" +
-			htmlEscape(formatDates(event.start, event.end, opt('timeFormat'))) +
+			parse_date(event) +
 			"</div>" +
 			"<div class='fc-event-title'>" +
 			htmlEscape(event.title || '') +
@@ -4280,13 +4286,17 @@ function AgendaEventRenderer() {
 			}
 		}
 
+    var parse_date = function (d) {
+      if (event.start.getMinutes() == 0) {
+        return moment(d).format('ha')
+      } else {
+        return moment(d).format('h:mma')
+      }
+    }
+
 		function updateTimeText(minuteDelta) {
 			var newStart = addMinutes(cloneDate(event.start), minuteDelta);
-			var newEnd;
-			if (event.end) {
-				newEnd = addMinutes(cloneDate(event.end), minuteDelta);
-			}
-			timeElement.text(formatDates(newStart, newEnd, opt('timeFormat')));
+			timeElement.text(parse_date(newStart));
 		}
 
 	}
@@ -4298,6 +4308,13 @@ function AgendaEventRenderer() {
 	
 	
 	function resizableSlotEvent(event, eventElement, timeElement) {
+    var parse_date = function (d) {
+      if (event.start.getMinutes() == 0) {
+        return moment(d.start).format('ha')
+      } else {
+        return moment(d.start).format('h:mma')
+      }
+    }
 		var snapDelta, prevSnapDelta;
 		var snapHeight = getSnapHeight();
 		var snapMinutes = getSnapMinutes();
@@ -4315,14 +4332,7 @@ function AgendaEventRenderer() {
 				// don't rely on ui.size.height, doesn't take grid into account
 				snapDelta = Math.round((Math.max(snapHeight, eventElement.height()) - ui.originalSize.height) / snapHeight);
 				if (snapDelta != prevSnapDelta) {
-					timeElement.text(
-						formatDates(
-							event.start,
-							(!snapDelta && !event.end) ? null : // no change, so don't display time range
-								addMinutes(eventEnd(event), snapMinutes*snapDelta),
-							opt('timeFormat')
-						)
-					);
+					timeElement.text(parse_date(event));
 					prevSnapDelta = snapDelta;
 				}
 			},
@@ -5260,13 +5270,14 @@ function DayEventRenderer() {
       if (current_selector.length > 0) {
         if (current_selector.val() == 'month') {
           $('.fc-event-hori').on('click', function () {
-            $('#calendar').attr('data-date', $(this).attr('data-date'));
+            $('#calendar').attr('data-date', $(this).attr('data-date'))
             current_selector.val('agendaDay').trigger('change');
           });
         }
         clearInterval(selector_interval);
       }
     }, 1);
+
 		return segments;
 	}
 
