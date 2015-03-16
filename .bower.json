@@ -1,0 +1,56 @@
+{
+  "name": "fullcalendar",
+  "dependencies": {
+    "jquery": "~1.10.2"
+  },
+  "devDependencies": {
+    "jquery-ui": "~1.10.3"
+  },
+  "optionalDependencies": {
+    "jquery-ui": "~1.10.3"
+  },
+  "title": "FullCalendar",
+  "description": "Full-sized drag & drop event calendar",
+  "keywords": [
+    "calendar",
+    "event",
+    "full-sized"
+  ],
+  "homepage": "http://arshaw.com/fullcalendar/",
+  "demo": "http://arshaw.com/fullcalendar/",
+  "docs": "http://arshaw.com/fullcalendar/docs/",
+  "download": "http://arshaw.com/fullcalendar/download/",
+  "bugs": "http://code.google.com/p/fullcalendar/issues/list",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/arshaw/fullcalendar/blob/master/license.txt"
+    }
+  ],
+  "author": {
+    "name": "Adam Shaw",
+    "email": "arshaw@arshaw.com",
+    "url": "http://arshaw.com/"
+  },
+  "copyright": "2013 Adam Shaw",
+  "main": [
+    "fullcalendar.js",
+    "fullcalendar.css"
+  ],
+  "ignore": [
+    "*",
+    "**/.*",
+    "!/*.js",
+    "!/*.css",
+    "!/bower.json"
+  ],
+  "_release": "abeb65f6e1",
+  "_resolution": {
+    "type": "branch",
+    "branch": "dunice",
+    "commit": "abeb65f6e1b53dd1a226ace50872b38c9fd110b7"
+  },
+  "_source": "git://github.com/dunice-valentin/fullcalendar.git",
+  "_target": "dunice",
+  "_originalSource": "git://github.com/dunice-valentin/fullcalendar.git"
+}

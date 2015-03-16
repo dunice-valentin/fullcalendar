@@ -160,8 +160,8 @@ $.fn.fullCalendar = function(options) {
 		(options.isRTL || options.isRTL===undefined && defaults.isRTL) ? rtlDefaults : {},
 		options
 	);
-	
-	
+
+
 	this.each(function(i, _element) {
 		var element = $(_element);
 		var calendar = new Calendar(element, options, eventSources);
@@ -3824,14 +3824,14 @@ function AgendaEventRenderer() {
 			return addMinutes(cloneDate(event.start), opt('defaultEventMinutes'));
 		}
 	}
-	
-	
+
+
 	// renders events in the 'time slots' at the bottom
 	// TODO: when we refactor this, when user returns `false` eventRender, don't have empty space
 	// TODO: refactor will include using pixels to detect collisions instead of dates (handy for seg cmp)
 	
 	function renderSlotSegs(segs, modifiedEventId) {
-	
+
 		var i, segCnt=segs.length, seg,
 			event,
 			top,
@@ -3966,8 +3966,8 @@ function AgendaEventRenderer() {
 		}
 
 	}
-	
-	
+
+
 	function slotSegHtml(event, seg) {
     var parse_date = function (d) {
       if (event.start.getMinutes() == 0) {
@@ -4016,7 +4016,8 @@ function AgendaEventRenderer() {
 			htmlEscape(event.title || '') +
 			"</div>" +
 			"</div>" +
-			"<div class='fc-event-bg'></div>";
+			"<div class='fc-event-bg'></div>" +
+			"<img data-id='" + event._id + "' class='close-event' src='img/app_icons/close-event.png' />";
 		if (seg.isEnd && isEventResizable(event)) {
 			html +=
 				"<div class='ui-resizable-handle ui-resizable-s'>=</div>";
@@ -4025,8 +4026,8 @@ function AgendaEventRenderer() {
 			"</" + (url ? "a" : "div") + ">";
 		return html;
 	}
-	
-	
+
+
 	function bindSlotSeg(event, eventElement, seg) {
 		var timeElement = eventElement.find('div.fc-event-time');
 		if (isEventDraggable(event)) {
@@ -5270,7 +5271,7 @@ function DayEventRenderer() {
       if (current_selector.length > 0) {
         if (current_selector.val() == 'month') {
           $('.fc-event-hori').on('click', function () {
-            $('#calendar').attr('data-date', $(this).attr('data-date'))
+            $(".sod_option[data-value='agendaDay']").trigger('click');
             current_selector.val('agendaDay').trigger('change');
           });
         }
