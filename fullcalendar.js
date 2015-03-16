@@ -5271,9 +5271,9 @@ function DayEventRenderer() {
       if (current_selector.length > 0) {
         if (current_selector.val() == 'month') {
           $('.fc-event-hori').on('click', function () {
-            $(".sod_option[data-value='agendaDay']").trigger('click');
-            current_selector.val('agendaDay').trigger('change');
-          });
+	    $('#calendar').attr('data-date', $(this).attr('data-date'));
+	    $(".sod_option[data-value='agendaDay']").trigger('click');
+	  });
         }
         clearInterval(selector_interval);
       }
